@@ -2,44 +2,28 @@
 //  BatteryManager.swift
 //  
 //
-//  Created by Marco Carmona on 5/19/23.
+//  Created by Marco Carmona on 5/23/23.
 //
 
 import Foundation
-import Terminal
 
 struct BatteryManager {
+    
+    private let mockArgument = "enable-mock"
 
-    static let current = BatteryManager()
-
-    private let basePowerSupplyPath = "/sys/class/power_supply/BAT0/"
-    private var terminal: Terminal
-
-    private enum Property: String {
-        case capacity = "capacity"
-        case status = "status"
-    }
-
+    var client: Dischargeable
+    
     init() {
-        self.terminal = terminal
-    }
+        for argument in ProcessInfo.processInfo.arguments {
+            if argument != mockArgument {
+                continue
+            }
+            
+            client = MockManager()
+            return
+        }
 
-    func getPercentage() {
-        let command = "cat \(basePowerSupplyPath)\(Property.capacity.rawValue)"
-
-        terminal.runCommand(command)
-    }
-
-    func getStatus() {
-        let command = "cat \(basePowerSupplyPath)\(Property.status.rawValue)"
-
-        terminal.runCommand(command)
-    }
-
-    private func getFromTerminal(property: Property) throws -> String {
-        let command = "cat \(basePowerSupplyPath)\(Property.capacity.rawValue)"
-
-        terminal.runCommand(command)
+        client = BatteryClient()
     }
 
 }
