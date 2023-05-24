@@ -10,13 +10,13 @@ import Foundation
 struct MockManager: Dischargeable {
     
     func getCurrentStatus() throws -> BatteryClient.CurrentStatus {
-        let (percentage, status) = rollTheDice()
+        let (percentage, state) = rollTheDice()
         
-        return .init(percentage: percentage, status: status)
+        return .init(percentage: percentage, state: state)
     }
     
-    private func rollTheDice() -> (Int, BatteryClient.Status) {
-        guard let randomStatus = BatteryClient.Status.allCases.randomElement() else {
+    private func rollTheDice() -> (Int, BatteryClient.State) {
+        guard let randomStatus = BatteryClient.State.allCases.randomElement() else {
             fatalError("Could not get random element for BatteryManager status")
         }
         

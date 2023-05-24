@@ -17,6 +17,16 @@ enum InvokeError: Error {
     case invalidResponse
 }
 
+struct PayloadMessage: Codable {
+    let action: Action
+    
+    enum Action: String, Codable {
+        case undefined = "UNDEFINED"
+        case charge = "CHARGE"
+        case discharge = "DISCHARGE"
+    }
+}
+
 struct Lambda {
     let client: LambdaClient
     let functionName: String

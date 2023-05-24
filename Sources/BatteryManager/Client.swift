@@ -14,20 +14,20 @@ struct BatteryClient: Dischargeable {
 
     private enum Property: String {
         case capacity = "capacity"
-        case status = "status"
+        case state = "state"
     }
     
     struct CurrentStatus {
         let percentage: Int
-        let status: Status
+        let state: State
     }
     
     enum PropertyError: Error {
         case parsePercentage
-        case parseStatus
+        case parseState
     }
     
-    enum Status: String, CaseIterable {
+    enum State: String, CaseIterable {
         case full = "Full"
         case discharging = "Discharging"
         case charging = "Charging"
@@ -39,9 +39,9 @@ struct BatteryClient: Dischargeable {
     
     func getCurrentStatus() throws -> CurrentStatus {
         let percentage = try getPercentage()
-        let status = try getStatus()
+        let state = try getState()
         
-        return .init(percentage: percentage, status: status)
+        return .init(percentage: percentage, state: state)
     }
 
     private func getPercentage() throws -> Int {
@@ -55,12 +55,12 @@ struct BatteryClient: Dischargeable {
         return percentage
     }
 
-    private func getStatus() throws -> Status {
-        let command = "cat \(basePowerSupplyPath)\(Property.status.rawValue)"
+    private func getState() throws -> State {
+        let command = "cat \(basePowerSupplyPath)\(Property.state.rawValue)"
         let result = try terminal.runCommand(command)
         
-        guard let parsed = Status(rawValue: result) else {
-            throw Self.PropertyError.parseStatus
+        guard let parsed = State(rawValue: result) else {
+            throw Self.PropertyError.parseState
         }
         
         return parsed
