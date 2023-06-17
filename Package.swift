@@ -14,7 +14,7 @@ let package = Package(
             name: "AWSSwiftSDK",
             url: "https://github.com/awslabs/aws-sdk-swift",
             from: "0.16.0"
-        ),
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

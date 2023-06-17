@@ -8,24 +8,23 @@
 import Foundation
 
 public final class BatteryPing {
+
+    enum Action: String {
+        case undefined
+        case charge
+        case discharge
+    }
+    
     private let minimumBeforeTrigger = 10
     private let waitSeconds: UInt32 = 10
-    private let lambdaFunctionName = "PlugTrigger"
 
     public func run() async throws {
-//        let lambda = try Lambda(region: .usEast1, functionName: "HelloWorld")
-//        let payload = PayloadMessage(name: "Carolina")
-//        let jsonData = try JSONEncoder().encode(payload)
-//        let response = try await lambda.invoke(payload: jsonData)
-//
-//        dump(response)
-        
         let manager = BatteryManager()
-//        let lambda = try Lambda(region: .usEast1, functionName: lambdaFunctionName)
+        let apn = try APN()
 
         while true {
             let status = try manager.client.getCurrentStatus()
-            var action = PayloadMessage.Action.undefined
+            var action = Action.undefined
             
             if status.percentage <= minimumBeforeTrigger && status.state == .discharging {
                 action = .charge
@@ -34,14 +33,10 @@ public final class BatteryPing {
             }
             
             if action != .undefined {
-//                var payload = PayloadMessage(action: action)
-//                let jsonData = try JSONEncoder().encode(payload)
-//                let response = try await lambda.invoke(payload: jsonData)
-//                
-//                dump(response)
-                dump(status)
-                print("Invoked lambda function for action: \(action.rawValue)")
+//                try await apn.send()
             }
+            
+            try await apn.send()
 
             sleep(waitSeconds)
         }
