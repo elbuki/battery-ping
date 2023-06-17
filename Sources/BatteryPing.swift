@@ -16,7 +16,7 @@ public final class BatteryPing {
     }
     
     private let minimumBeforeTrigger = 10
-    private let waitSeconds: UInt32 = 10
+    private let waitSeconds: UInt32 = 30
 
     public func run() async throws {
         let manager = BatteryManager()
@@ -33,10 +33,8 @@ public final class BatteryPing {
             }
             
             if action != .undefined {
-//                try await apn.send()
+                try await apn.send()
             }
-            
-            try await apn.send()
 
             sleep(waitSeconds)
         }
