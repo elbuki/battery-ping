@@ -18,7 +18,8 @@ let package = Package(
             dependencies: [],
             path: "Sources",
             resources: [
-                .process("config.json")
+                .process("config.json"),
+                .process("APN/create_token.php")
             ]
         )
     ]
