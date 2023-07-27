@@ -6,5 +6,5 @@ let ping = BatteryPing()
 do {
     try await ping.run()
 } catch {
-    print("Whoops! An error occurred: \(error.localizedDescription)")
+    print("Whoops! An error occurred: \(error)")
 }

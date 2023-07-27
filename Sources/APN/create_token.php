@@ -41,12 +41,12 @@ function apns_jwt_token($team_id, $key_id, $private_key_pem_str)
 
 $token = apns_jwt_token(
     'BLQ2AFW6YZ',
-    'JNZ964YHS4',
+    'C7V7VAZRX8',
     "-----BEGIN PRIVATE KEY-----
-MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg9Srucjp82Gyeg+8M
-gCZVGhqh41rOx8nTrTSbNOaCUhCgCgYIKoZIzj0DAQehRANCAATsbv7UVPNJtjcy
-Cn8Px9hTET/Q50i+dDUhU9Yya4ak7dhz2p1VKNyZjRdXCi0X3S162h+v2V9s5J5N
-GOYI6DLJ
+MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgxJG8UFOI0QKSVOuQ
+Limc8QeTJcWRpAxoimO3bv9ccP2gCgYIKoZIzj0DAQehRANCAASgKeLi3X/bf5Sp
+/iaOuMa1QIHCULOWZXJe2j5GVgNGjlglOst2jmutanTT/jSSf0wu7fsIK2GfVOKq
+TgkPmuZE
 -----END PRIVATE KEY-----"
 );
 
