@@ -31,6 +31,7 @@ struct APN {
     
     private struct Payload: Codable {
         let aps: APS
+        let action: String
     }
     
     private enum InitializationError: Error {
@@ -73,8 +74,8 @@ struct APN {
         }
     }
     
-    func send() async throws {
-        let payload = Payload(aps: .init(contentAvailable: 1))
+    func send(actionToPerform: String) async throws {
+        let payload = Payload(aps: .init(contentAvailable: 1), action: actionToPerform)
         let headers: [String: String] = [
             "apns-push-type": "background",
             "apns-expiration": "0",

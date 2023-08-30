@@ -26,7 +26,7 @@ class MockManager: Dischargeable {
         case .charging:
             return (100, .full)
         case .full:
-            return (50, .discharging)
+            return (5, .discharging)
         }
     }
     

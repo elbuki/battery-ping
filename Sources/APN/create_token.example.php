@@ -40,14 +40,9 @@ function apns_jwt_token($team_id, $key_id, $private_key_pem_str)
 }
 
 $token = apns_jwt_token(
-    'BLQ2AFW6YZ',
-    'C7V7VAZRX8',
-    "-----BEGIN PRIVATE KEY-----
-MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgxJG8UFOI0QKSVOuQ
-Limc8QeTJcWRpAxoimO3bv9ccP2gCgYIKoZIzj0DAQehRANCAASgKeLi3X/bf5Sp
-/iaOuMa1QIHCULOWZXJe2j5GVgNGjlglOst2jmutanTT/jSSf0wu7fsIK2GfVOKq
-TgkPmuZE
------END PRIVATE KEY-----"
+    'TEAM_ID',
+    'KEY_ID',
+    "-----BEGIN PRIVATE KEY-----%%%-----END PRIVATE KEY-----"
 );
 
 echo $token;
