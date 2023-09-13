@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 struct APN {
     
     private struct Config: Decodable {
@@ -74,7 +78,7 @@ struct APN {
         }
     }
     
-    func send(actionToPerform: String) async throws {
+    func send(actionToPerform: String) throws {
         let payload = Payload(aps: .init(contentAvailable: 1), action: actionToPerform)
         let headers: [String: String] = [
             "apns-push-type": "background",
@@ -111,14 +115,36 @@ struct APN {
 
         request.setValue(token, forHTTPHeaderField: "Authorization")
         request.httpBody = encoded
-
-        let (_, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw Self.RequestError.parsingResponse
+        var respStatusCode: Int?
+        var err: Error?
+
+        let wg = DispatchGroup()
+
+        wg.enter()
+
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            err = error
+            
+            guard let resp = response as? HTTPURLResponse else {
+                return
+            }
+
+            respStatusCode = resp.statusCode
+
+            wg.leave()
         }
         
-        guard httpResponse.statusCode == statusOkCode else {
+        task.resume()
+
+        _ = wg.wait(timeout: .now() + .seconds(5))
+        
+        if let err {
+            print("Got an error from the request: \(err.localizedDescription)")
+            throw err
+        }
+        
+        guard respStatusCode == statusOkCode else {
             throw Self.RequestError.unexpectedStatusCode
         }
         

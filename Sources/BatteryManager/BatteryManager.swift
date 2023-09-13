@@ -15,7 +15,7 @@ struct BatteryManager {
     
     init() {
         for argument in ProcessInfo.processInfo.arguments {
-            if argument != mockArgument {
+            if argument == mockArgument {
                 continue
             }
             
